@@ -12,7 +12,7 @@ const { pipeline } = require('stream');
 const FormData = require('form-data');
 const cors = require('cors');
 const app = express();
-app.use(cors());
+// app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'image')));
 
@@ -238,6 +238,6 @@ function saveUserToDatabase(userID) {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`[Jay] JS : Running on http://localhost:${PORT}`);
-    console.log(`[Jay] Python : Running on http://localhost:5000`);
+    // console.log(`[Jay] Python : Running on http://localhost:5000`);
     
 });
