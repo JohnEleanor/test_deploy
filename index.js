@@ -59,10 +59,15 @@ async function handleEvents(event) {
     console.log(event.type);
 }
 
+app.get("/", (req, res) => {
+    console.log(req);
+    res.send("Welcome to Jay's Line Bot"); 
+});
 
 app.post('/v1/webhook', (req, res) => {
     const events = req.body.events;
-    
+    console.log(JSON.stringify(req));
+    console.log(events);
     events.forEach(event => {
         const replyToken = event.replyToken;
         const userMessage = event.message.text;
