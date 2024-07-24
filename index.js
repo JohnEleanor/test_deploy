@@ -10,23 +10,9 @@ const path = require('path');
 const fs = require('fs');
 const { pipeline } = require('stream');
 const FormData = require('form-data');
-
-// const { spawn } = require('child_process');
-
-// const pythonProcess = spawn('python', ['Jay_Food_AI.py']);
-// pythonProcess.stdout.on('data', (data) => {
-//     console.log(`Python server output: ${data}`);
-// });
-
-// pythonProcess.stderr.on('data', (data) => {
-//     console.error(`Python server error: ${data}`);
-// });
-
-// pythonProcess.on('close', (code) => {
-//     console.log(`Python server process exited with code ${code}`);
-// });
-
+const cors = require('cors');
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'image')));
 
@@ -65,8 +51,8 @@ app.get("/", (req, res) => {
 });
 
 app.post('/v1/webhook', (req, res) => {
-    const events = req.body.events;
     console.log(JSON.stringify(req));
+    const events = req.body.events;
     console.log(events);
     events.forEach(event => {
         const replyToken = event.replyToken;
