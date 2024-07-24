@@ -4,6 +4,9 @@ import numpy as np
 import io
 
 app = Flask(__name__)
+@app.route('/', methods=['GET'])
+def index():
+    return 'Hello, World!'
 
 @app.route('/process', methods=['POST'])
 def process_image():
