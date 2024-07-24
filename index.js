@@ -60,6 +60,7 @@ app.post('/v1/webhook', async (req, res) => {
             console.log('Replay Token :', replyToken);  
             axios.get(`https://api.line.me/v2/bot/profile/${userID}`, { headers: headers })
             .then(response => {
+                console.log('User Profile :', response.data);
                 let replyText = '';
                 if (greetings.includes(userMessage)) {
                     replyText = `สวัสดีคะ คุณ ${response.data.displayName} มีอะไรให้ช่วยมั้ยค่ะ 🙏`;
@@ -94,7 +95,7 @@ app.post('/v1/webhook', async (req, res) => {
 
 async function replyMessage(replyToken, message, userID) {
     
-    
+    console.log('User ID :', userID);
     console.log('Reply Message :', message);
     try {
         const body = {
