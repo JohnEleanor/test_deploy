@@ -42,7 +42,7 @@ async function handleEvents(event) {
 
 app.post('/v1/webhook', (req, res) => {
     const events = req.body.events;
-    
+    console.log(events);
     events.forEach(event => {
         const replyToken = event.replyToken;
         const userMessage = event.message.text;
