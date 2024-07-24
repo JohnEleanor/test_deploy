@@ -51,8 +51,8 @@ app.post('/v1/webhook', (req, res) => {
       
         if (event.type === 'message' && event.message.type === 'text') {
             // ! เงื่อนไขสำหรับข้อความ
-            var aa = _client.getProfile(userID);
-            _client.re
+            console.log('User ID :', userID);
+            console.log('User Message :', userMessage);
             axios.get(`https://api.line.me/v2/bot/profile/${userID}`, { headers: headers })
             .then(response => {
                 let replyText = '';
