@@ -41,6 +41,10 @@ async function handleEvents(event) {
     console.log(event.type);
 }
 
+app.get('/', (req, res) => {
+    res.send('Jay Line bot api is running💻');
+});
+
 
 app.post('/v1/webhook', (req, res) => {
     const events = req.body.events; 
