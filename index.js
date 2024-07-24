@@ -20,7 +20,7 @@ const headers = {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${process.env.LINE_CHANNEL_ACCESS_TOKEN}`
 };
-
+// 
 const noUnserstand = [
     'ขอโทษค่ะ หนูไม่เข้าใจค่ะ ลองใหม่อีกครั้งได้มั้ยคะ 🥲',
     'กรุณาลองใหม่ค่ะ 🙏',
