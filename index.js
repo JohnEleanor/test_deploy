@@ -46,7 +46,7 @@ app.get('/', (req, res) => {
 });
 
 
-app.post('/v1/webhook', (req, res) => {
+app.post('/v1/webhook', async (req, res) => {
     const events = req.body.events; 
     events.forEach(event => {
         const replyToken = event.replyToken;
@@ -92,27 +92,36 @@ app.post('/v1/webhook', (req, res) => {
     res.sendStatus(200);
 });
 
-function replyMessage(replyToken, message, userID) {
+async function replyMessage(replyToken, message, userID) {
     
     
-    const body = {
-        replyToken: replyToken,
-        messages: [{
-            type: 'text',
-            text: message
-        }]
-    };
-
-    axios.post('https://api.line.me/v2/bot/message/reply', body, { headers: headers })
-        .then(response => {
-            console.log('Message sent successfully '+userID);
-            // saveUserToDatabase(userID);
-        })
-        .catch(error => {
-            console.log('Error sending message:', error);
-        });
+    console.log('Reply Message :', message);
+    try {
+        const body = {
+            replyToken: replyToken,
+            messages: [{
+                type: 'text',
+                text: message
+            }]
+        };
         
-   
+        const result = await axios.post('https://api.line.me/v2/bot/message/reply', body, 
+            { 
+                headers: headers 
+            })
+            // .then(response => {
+            //     console.log('Message sent successfully '+userID);
+            //     // saveUserToDatabase(userID);
+            // })
+            // .catch(error => {
+            //     console.log('Error sending message:', error);
+            // });
+            console.log(result.data);
+            
+    } catch (error) {
+        console.log('Error sending message:', error.message);
+    }
+    
 }
 
 function replyImage(replyToken, imageId) {
