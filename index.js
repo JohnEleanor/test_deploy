@@ -57,6 +57,7 @@ app.post('/v1/webhook', (req, res) => {
             // ! เงื่อนไขสำหรับข้อความ
             console.log('User ID :', userID);
             console.log('User Message :', userMessage);
+            console.log('Replay Token :', replyToken);  
             axios.get(`https://api.line.me/v2/bot/profile/${userID}`, { headers: headers })
             .then(response => {
                 let replyText = '';
