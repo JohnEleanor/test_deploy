@@ -11,20 +11,20 @@ const fs = require('fs');
 const { pipeline } = require('stream');
 const FormData = require('form-data');
 
-const { spawn } = require('child_process');
+// const { spawn } = require('child_process');
 
-const pythonProcess = spawn('python', ['Jay_Food_AI.py']);
-pythonProcess.stdout.on('data', (data) => {
-    console.log(`Python server output: ${data}`);
-});
+// const pythonProcess = spawn('python', ['Jay_Food_AI.py']);
+// pythonProcess.stdout.on('data', (data) => {
+//     console.log(`Python server output: ${data}`);
+// });
 
-pythonProcess.stderr.on('data', (data) => {
-    console.error(`Python server error: ${data}`);
-});
+// pythonProcess.stderr.on('data', (data) => {
+//     console.error(`Python server error: ${data}`);
+// });
 
-pythonProcess.on('close', (code) => {
-    console.log(`Python server process exited with code ${code}`);
-});
+// pythonProcess.on('close', (code) => {
+//     console.log(`Python server process exited with code ${code}`);
+// });
 
 const app = express();
 app.use(bodyParser.json());
