@@ -3,7 +3,7 @@
     "builds": [
         {
             "src": "Jay_Food_AI.py",
-            "use": "@now/node"
+            "use": "@vercel/python"
         }
     ],
     "routes": [
