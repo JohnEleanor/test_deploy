@@ -235,9 +235,11 @@ function saveUserToDatabase(userID) {
 
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
     console.log(`[Jay] JS : Running on http://localhost:${PORT}`);
     // console.log(`[Jay] Python : Running on http://localhost:5000`);
     
 });
+
+module.exports = app
