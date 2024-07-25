@@ -48,8 +48,11 @@ app.get('/', (req, res) => {
 
 
 app.post('/v1/webhook', async (req, res) => {
-    const events = req.body.events; 
     if (!events) return res.status(400).send('Bad Request');
+    console.log('Webhook called');
+    console.log(req.body.events);
+    const events = req.body.events; 
+
     if (util.isArray(events)) {
         events.forEach(event => {
             const replyToken = event.replyToken;
@@ -105,7 +108,7 @@ app.post('/v1/webhook', async (req, res) => {
         });
     }else { 
         console.log('No events found)');
-        return res.status(400).send('Bad Request');
+        return res.status(400).send('Data is not array');
     }
     // return res.sendStatus(400).send('Bad Request');
 });
