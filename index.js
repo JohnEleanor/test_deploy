@@ -58,31 +58,37 @@ app.post('/v1/webhook', async (req, res) => {
             console.log('User ID :', userID);
             console.log('User Message :', userMessage);
             console.log('Replay Token :', replyToken);  
-            axios.get(`https://api.line.me/v2/bot/profile/${userID}`, { headers: headers })
-            .then(response => {
-                console.log('User Profile :', response.data);
-                let replyText = '';
-                if (greetings.includes(userMessage)) {
-                    replyText = `สวัสดีคะ คุณ ${response.data.displayName} มีอะไรให้ช่วยมั้ยค่ะ 🙏`;
-                } else if (wellbeing.includes(userMessage)) {
-                    replyText = 'หนูสบายดีค่ะ ขอบคุณที่ถามค่ะ 🙏';
-                } else if (thanks.includes(userMessage)) {
-                    replyText = 'ยินดีค่ะ มีอะไรให้ช่วยอีกมั้ยคะ 🙏';
-                } else if (good.includes(userMessage)) {
-                    replyText = 'ดีค่ะ มีอะไรให้ช่วยมั้ยคะ 🙏';
-                } else if (helpRequests.includes(userMessage)) {
-                    replyText = 'สวัสดีค่ะ มีอะไรให้ช่วยมั้ยคะ 🙏\nหากต้องการให้ดูเมนูอาหารเเละประเมิณเเคลสามารถส่งรูปภาพมาได้เลยค่ะ';
-                } else if (addMenu.includes(userMessage)) {
-                    replyText = 'สวัสดีค่ะ สามารถส่งรูปภาพเมนูอาหารมาได้เลยค่ะ 🙏';
-                } else {
-                    replyText = noUnderstand[Math.floor(Math.random() * noUnderstand.length)];
-                }
-                replyMessage(replyToken, replyText, userID);
-            })
-            .catch(error => {
-                console.log('Error sending message:', error);
-            });
-           
+            // เปลี่ยน Logic ตรงนี้
+            try {
+                
+                axios.get(`https://api.line.me/v2/bot/profile/${userID}`, { headers: headers })
+                .then(response => {
+                    console.log('User Profile :', response.data);
+                    let replyText = '';
+                    if (greetings.includes(userMessage)) {
+                        replyText = `สวัสดีคะ คุณ ${response.data.displayName} มีอะไรให้ช่วยมั้ยค่ะ 🙏`;
+                    } else if (wellbeing.includes(userMessage)) {
+                        replyText = 'หนูสบายดีค่ะ ขอบคุณที่ถามค่ะ 🙏';
+                    } else if (thanks.includes(userMessage)) {
+                        replyText = 'ยินดีค่ะ มีอะไรให้ช่วยอีกมั้ยคะ 🙏';
+                    } else if (good.includes(userMessage)) {
+                        replyText = 'ดีค่ะ มีอะไรให้ช่วยมั้ยคะ 🙏';
+                    } else if (helpRequests.includes(userMessage)) {
+                        replyText = 'สวัสดีค่ะ มีอะไรให้ช่วยมั้ยคะ 🙏\nหากต้องการให้ดูเมนูอาหารเเละประเมิณเเคลสามารถส่งรูปภาพมาได้เลยค่ะ';
+                    } else if (addMenu.includes(userMessage)) {
+                        replyText = 'สวัสดีค่ะ สามารถส่งรูปภาพเมนูอาหารมาได้เลยค่ะ 🙏';
+                    } else {
+                        replyText = noUnderstand[Math.floor(Math.random() * noUnderstand.length)];
+                    }
+                    replyMessage(replyToken, replyText, userID);
+                })
+                .catch(error => {
+                    console.log('Error sending message:', error);
+                });
+               
+            } catch (error) {
+                console.log('Error sending message:', error.message);
+            }
         } else if (event.type === 'message' && event.message.type === 'image') {
             // ! เงื่อนไขสำหรับรูปภาพ
             precessImage(replyToken, event.message.id, userID);
@@ -94,7 +100,7 @@ app.post('/v1/webhook', async (req, res) => {
 });
 
 async function replyMessage(replyToken, message, userID) {
-    
+    console.log('ReplyMessage Called');
     console.log('User ID :', userID);
     console.log('Reply Message :', message);
     try {
@@ -110,15 +116,11 @@ async function replyMessage(replyToken, message, userID) {
             { 
                 headers: headers 
             })
-            // .then(response => {
-            //     console.log('Message sent successfully '+userID);
-            //     // saveUserToDatabase(userID);
-            // })
-            // .catch(error => {
-            //     console.log('Error sending message:', error);
-            // });
-            console.log(result.data);
-            
+            if (result.status === 200) {
+                console.log(result.data);
+            }else {
+                console.log('Error sending message:', result.data);
+            }
     } catch (error) {
         console.log('Error sending message:', error.message);
     }
