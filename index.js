@@ -50,9 +50,8 @@ app.get('/', (req, res) => {
 app.post('/v1/webhook', async (req, res) => {
     if (!events) return res.status(400).send('Bad Request');
     console.log('Webhook called');
-    
+    console.log(req.body.events);
     if (util.isArray(events)) {
-        console.log(req.body.events);
         const events = req.body.events; 
         events.forEach(event => {
             const replyToken = event.replyToken;
