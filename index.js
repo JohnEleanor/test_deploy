@@ -51,64 +51,64 @@ app.post('/v1/webhook', async (req, res) => {
     if (!events) return res.status(400).send('Bad Request');
     console.log('Webhook called');
     console.log(req.body.events);
-    if (util.isArray(events)) {
-        const events = req.body.events; 
-        events.forEach(event => {
-            const replyToken = event.replyToken;
-            const userMessage = event.message.text;
-            const userID = event.source.userId;
+    // if (util.isArray(events)) {
+    //     const events = req.body.events; 
+    //     events.forEach(event => {
+    //         const replyToken = event.replyToken;
+    //         const userMessage = event.message.text;
+    //         const userID = event.source.userId;
         
-            if (event.type === 'message' && event.message.type === 'text') {
-                console.log("=================");
-                console.log('User ID :', userID);
-                console.log('User Message :', userMessage);
-                console.log('Replay Token :', replyToken);  
-                console.log("=================");
-                // เปลี่ยน Logic ตรงนี้
-                try {
+    //         if (event.type === 'message' && event.message.type === 'text') {
+    //             console.log("=================");
+    //             console.log('User ID :', userID);
+    //             console.log('User Message :', userMessage);
+    //             console.log('Replay Token :', replyToken);  
+    //             console.log("=================");
+    //             // เปลี่ยน Logic ตรงนี้
+    //             try {
                     
-                    const resule = axios.get(`https://api.line.me/v2/bot/profile/${userID}`, { headers: headers })
-                    .then(response => {
-                        console.log('User Profile :', response.data);
-                        let replyText = '';
-                        if (greetings.includes(userMessage)) {
-                            replyText = `สวัสดีคะ คุณ ${response.data.displayName} มีอะไรให้ช่วยมั้ยค่ะ 🙏`;
-                        } else if (wellbeing.includes(userMessage)) {
-                            replyText = 'หนูสบายดีค่ะ ขอบคุณที่ถามค่ะ 🙏';
-                        } else if (thanks.includes(userMessage)) {
-                            replyText = 'ยินดีค่ะ มีอะไรให้ช่วยอีกมั้ยคะ 🙏';
-                        } else if (good.includes(userMessage)) {
-                            replyText = 'ดีค่ะ มีอะไรให้ช่วยมั้ยคะ 🙏';
-                        } else if (helpRequests.includes(userMessage)) {
-                            replyText = 'สวัสดีค่ะ มีอะไรให้ช่วยมั้ยคะ 🙏\nหากต้องการให้ดูเมนูอาหารเเละประเมิณเเคลสามารถส่งรูปภาพมาได้เลยค่ะ';
-                        } else if (addMenu.includes(userMessage)) {
-                            replyText = 'สวัสดีค่ะ สามารถส่งรูปภาพเมนูอาหารมาได้เลยค่ะ 🙏';
-                        } else {
-                            replyText = noUnderstand[Math.floor(Math.random() * noUnderstand.length)];
-                        }
-                        replyMessage(replyToken, replyText, userID);
-                        return res.status(200).send('OK');
-                    })
-                    .catch(error => {
-                        console.log('Error sending message:', error.message);
-                        return res.status(400).json({ message: 'Error sending message' , err : error});
-                    });
+    //                 const resule = axios.get(`https://api.line.me/v2/bot/profile/${userID}`, { headers: headers })
+    //                 .then(response => {
+    //                     console.log('User Profile :', response.data);
+    //                     let replyText = '';
+    //                     if (greetings.includes(userMessage)) {
+    //                         replyText = `สวัสดีคะ คุณ ${response.data.displayName} มีอะไรให้ช่วยมั้ยค่ะ 🙏`;
+    //                     } else if (wellbeing.includes(userMessage)) {
+    //                         replyText = 'หนูสบายดีค่ะ ขอบคุณที่ถามค่ะ 🙏';
+    //                     } else if (thanks.includes(userMessage)) {
+    //                         replyText = 'ยินดีค่ะ มีอะไรให้ช่วยอีกมั้ยคะ 🙏';
+    //                     } else if (good.includes(userMessage)) {
+    //                         replyText = 'ดีค่ะ มีอะไรให้ช่วยมั้ยคะ 🙏';
+    //                     } else if (helpRequests.includes(userMessage)) {
+    //                         replyText = 'สวัสดีค่ะ มีอะไรให้ช่วยมั้ยคะ 🙏\nหากต้องการให้ดูเมนูอาหารเเละประเมิณเเคลสามารถส่งรูปภาพมาได้เลยค่ะ';
+    //                     } else if (addMenu.includes(userMessage)) {
+    //                         replyText = 'สวัสดีค่ะ สามารถส่งรูปภาพเมนูอาหารมาได้เลยค่ะ 🙏';
+    //                     } else {
+    //                         replyText = noUnderstand[Math.floor(Math.random() * noUnderstand.length)];
+    //                     }
+    //                     replyMessage(replyToken, replyText, userID);
+    //                     return res.status(200).send('OK');
+    //                 })
+    //                 .catch(error => {
+    //                     console.log('Error sending message:', error.message);
+    //                     return res.status(400).json({ message: 'Error sending message' , err : error});
+    //                 });
                 
-                } catch (error) {
-                    console.log('Error sending message:', error.message);
-                    return res.status(400).json({ message: 'Error sending message' , err : error});
-                }
-            } else if (event.type === 'message' && event.message.type === 'image') {
-                // ! เงื่อนไขสำหรับรูปภาพ
-                precessImage(replyToken, event.message.id, userID);
-                return res.status(200).send('OK');
+    //             } catch (error) {
+    //                 console.log('Error sending message:', error.message);
+    //                 return res.status(400).json({ message: 'Error sending message' , err : error});
+    //             }
+    //         } else if (event.type === 'message' && event.message.type === 'image') {
+    //             // ! เงื่อนไขสำหรับรูปภาพ
+    //             precessImage(replyToken, event.message.id, userID);
+    //             return res.status(200).send('OK');
 
-            }
-        });
-    }else { 
-        console.log('No events found)');
-        return res.status(400).send('Data is not array');
-    }
+    //         }
+    //     });
+    // }else { 
+    //     console.log('No events found)');
+    //     return res.status(400).send('Data is not array');
+    // }
     // return res.sendStatus(400).send('Bad Request');
 });
 
