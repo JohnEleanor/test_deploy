@@ -3,21 +3,13 @@
     "builds": [
         {
             "src": "index.js",
-            "use": "@vercel/node"
-        },
-        {
-            "src": "Jay_Food_AI.py",
-            "use": "@vercel/python"
+            "use": "@now/node"
         }
     ],
     "routes": [
         {
-            "src": "/(.*)",                                             
+            "src": "/(.*)",
             "dest": "/index.js"
-        },
-        {
-            "src": "/(.*)",                                             
-            "dest": "/Jay_Food_AI.py"
         }
     ]
 }
